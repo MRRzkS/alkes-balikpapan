@@ -60,6 +60,16 @@ return [
             'report' => false,
         ],
 
+        // Uploads served directly from public/uploads (no storage:link needed on shared hosting).
+        'uploads' => [
+            'driver' => 'local',
+            'root' => public_path('uploads'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/uploads',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*
