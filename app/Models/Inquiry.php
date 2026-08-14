@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inquiry extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'company',
+        'phone',
+        'email',
+        'message',
+        'is_read',
+    ];
+
+    protected $casts = [
+        'is_read' => 'boolean',
+    ];
 }

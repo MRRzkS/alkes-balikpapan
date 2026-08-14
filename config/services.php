@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    // WhatsApp gateway for inquiry notifications (e.g. Fonnte). Leave empty to disable.
+    'wa_gateway' => [
+        'token' => env('WA_GATEWAY_TOKEN'),
+    ],
+
 ];

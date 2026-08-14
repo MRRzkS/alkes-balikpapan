@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\Notification::extend('whatsapp', function () {
+            return new \App\Notifications\Channels\WhatsAppChannel();
+        });
     }
 }
