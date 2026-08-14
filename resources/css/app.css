@@ -51,15 +51,31 @@ body {
 /* Liquid-glass surface: blurred translucent layer with subtle border + inner light.
    Dark variant keeps enough opacity for >=4.5:1 text contrast on real content. */
 .glass {
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .dark .glass {
-    background: rgba(15, 23, 42, 0.62);
-    border-color: rgba(148, 163, 184, 0.18);
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(148, 163, 184, 0.2);
 }
+
+/* Sticky nav solidifies once the page is scrolled, so links stay readable
+   over imagery/sections. */
+[data-site-header].scrolled {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 24px -16px rgba(15, 23, 42, 0.35);
+}
+.dark [data-site-header].scrolled {
+    background: rgba(15, 23, 42, 0.92);
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Theme toggle icon: sun in dark mode, moon in light mode (CSS-driven, no JS state). */
+.theme-moon { display: none; }
+.dark .theme-sun { display: none; }
+.dark .theme-moon { display: block; }
 
 /* Brand gradients — calm navy/sky only (design system forbids neon/AI gradients). */
 .gradient-hero {
