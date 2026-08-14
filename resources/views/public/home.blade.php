@@ -30,14 +30,29 @@
     </script>
 
     {{-- Hero --}}
-    <section class="gradient-hero">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center reveal">
+    <section class="gradient-hero relative overflow-hidden">
+        {{-- Ambient gradient blobs (calm navy/sky, not neon) --}}
+        <div class="pointer-events-none absolute -top-24 -right-16 w-80 h-80 rounded-full bg-brand-400/30 blur-3xl dark:bg-brand-600/25"></div>
+        <div class="pointer-events-none absolute -bottom-24 -left-16 w-72 h-72 rounded-full bg-brand-200/40 blur-3xl dark:bg-brand-700/20"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center reveal">
             <div class="text-center md:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold text-brand-700 dark:text-white">Alkes Balikpapan</h1>
+                <span class="inline-block mb-4 px-3 py-1 rounded-full text-xs font-medium bg-brand-600/10 text-brand-700 dark:bg-brand-400/15 dark:text-brand-200">Distributor Alat Kesehatan · Kalimantan Timur</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-700 dark:text-white leading-tight">Alkes Balikpapan</h1>
                 <p class="mt-4 text-lg md:text-xl text-ink-600 dark:text-ink-300 max-w-2xl">Solusi Pengadaan Alat Kesehatan Terpercaya di Kalimantan Timur</p>
                 <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
                     <a href="{{ config('site.wa_link') }}" target="_blank" rel="noopener" class="bg-wa hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-full hover:-translate-y-0.5 transition-transform duration-200">Konsultasi via WhatsApp</a>
                     <a href="#produk" class="border border-brand-200 dark:border-white/15 text-brand-700 dark:text-white font-semibold px-6 py-3 rounded-full hover:bg-brand-50 dark:hover:bg-white/10 transition">Lihat Produk</a>
+                </div>
+                <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-6">
+                    <div class="glass rounded-2xl px-5 py-3">
+                        <div class="text-2xl font-bold text-brand-700 dark:text-white">24<span class="text-base">j</span></div>
+                        <div class="text-xs text-ink-500 dark:text-ink-400">Respon WhatsApp</div>
+                    </div>
+                    <div class="glass rounded-2xl px-5 py-3">
+                        <div class="text-2xl font-bold text-brand-700 dark:text-white">Kaltim</div>
+                        <div class="text-xs text-ink-500 dark:text-ink-400">Area layanan</div>
+                    </div>
                 </div>
                 <p class="mt-6 text-sm text-ink-400">Dipersembahkan oleh Wahana Surya</p>
             </div>
