@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AnalyticsTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_ga_snippet_is_rendered_when_configured(): void
     {
         config(['analytics.ga_id' => 'G-TEST123456']);
