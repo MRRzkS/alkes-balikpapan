@@ -21,4 +21,12 @@ return [
 
     // Social hashtags
     'hashtags' => '#DistributorAlkesBalikpapan #AlkesKaltim #SupplierAlkes #PengadaanAlkes #TokoAlkesBalikpapan #AlkesMurahBalikpapan #KesehatanBalikpapan',
+
+    // Placeholder images (Unsplash, medical-themed). Replace with real brand assets before launch.
+    'placeholders' => [
+        'hero'    => 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=70',
+        'about'   => 'https://images.unsplash.com/photo-1666214280391-8ff5bd3c0bf0?auto=format&fit=crop&w=800&q=70',
+        'product' => 'https://images.unsplash.com/photo-1583947581924-860bda6a26df?auto=format&fit=crop&w=600&q=70',
+        'post'    => 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=70',
+    ],
 ];

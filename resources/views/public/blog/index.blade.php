@@ -6,6 +6,8 @@
                 <article class="border rounded-xl overflow-hidden">
                     @if ($post->featured_image)
                         <img src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}" class="h-44 w-full object-cover">
+                    @else
+                        <img src="{{ config('site.placeholders.post') }}" alt="{{ $post->title }}" class="h-44 w-full object-cover">
                     @endif
                     <div class="p-5">
                         <h2 class="font-semibold text-lg">{{ $post->title }}</h2>

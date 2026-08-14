@@ -14,6 +14,8 @@
                 <article class="border rounded-xl overflow-hidden">
                     @if ($product->image)
                         <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="h-44 w-full object-cover">
+                    @else
+                        <img src="{{ config('site.placeholders.product') }}" alt="{{ $product->name }}" class="h-44 w-full object-cover">
                     @endif
                     <div class="p-5">
                         <span class="text-xs text-brand-600 font-medium">{{ $categories[$product->category] ?? '' }}</span>

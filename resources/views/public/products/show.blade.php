@@ -5,6 +5,8 @@
         <h1 class="text-3xl font-bold text-brand-700 mt-1">{{ $product->name }}</h1>
         @if ($product->image)
             <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="my-6 rounded-xl w-full">
+        @else
+            <img src="{{ config('site.placeholders.product') }}" alt="{{ $product->name }}" class="my-6 rounded-xl w-full">
         @endif
         @if ($product->description)
             <div class="prose max-w-none mt-4">{{ nl2br(e($product->description)) }}</div>

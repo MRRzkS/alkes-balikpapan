@@ -31,21 +31,29 @@
 
     {{-- Hero --}}
     <section class="bg-gradient-to-b from-brand-50 to-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-brand-700">Alkes Balikpapan</h1>
-            <p class="mt-4 text-lg md:text-xl text-muted max-w-2xl mx-auto">Solusi Pengadaan Alat Kesehatan Terpercaya di Kalimantan Timur</p>
-            <div class="mt-8 flex flex-wrap justify-center gap-4">
-                <a href="{{ config('site.wa_link') }}" target="_blank" rel="noopener" class="bg-wa hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-full">Konsultasi via WhatsApp</a>
-                <a href="#produk" class="border border-brand-200 text-brand-700 font-semibold px-6 py-3 rounded-full hover:bg-brand-50">Lihat Produk</a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-700">Alkes Balikpapan</h1>
+                <p class="mt-4 text-lg md:text-xl text-muted max-w-2xl">Solusi Pengadaan Alat Kesehatan Terpercaya di Kalimantan Timur</p>
+                <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="{{ config('site.wa_link') }}" target="_blank" rel="noopener" class="bg-wa hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-full">Konsultasi via WhatsApp</a>
+                    <a href="#produk" class="border border-brand-200 text-brand-700 font-semibold px-6 py-3 rounded-full hover:bg-brand-50">Lihat Produk</a>
+                </div>
+                <p class="mt-6 text-sm text-gray-400">Dipersembahkan oleh Wahana Surya</p>
             </div>
-            <p class="mt-6 text-sm text-gray-400">Dipersembahkan oleh Wahana Surya</p>
+            <div class="order-first md:order-last">
+                <img src="{{ config('site.placeholders.hero') }}" alt="Alat kesehatan medis" class="rounded-2xl shadow-lg w-full h-64 md:h-80 object-cover">
+            </div>
         </div>
     </section>
 
     {{-- Tentang --}}
-    <section id="tentang" class="max-w-4xl mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold text-brand-700 mb-4">Tentang Kami</h2>
-        <p class="text-muted leading-relaxed">Wahana Surya (Alkes Balikpapan) adalah penyedia alat kesehatan yang berpusat di Balikpapan, Kalimantan Timur. Kami hadir untuk memotong rantai distribusi yang panjang, memberikan akses cepat dan efisien terhadap alat kesehatan berkualitas bagi masyarakat dan instansi medis di seluruh Kalimantan.</p>
+    <section id="tentang" class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
+        <img src="{{ config('site.placeholders.about') }}" alt="Tim Alkes Balikpapan" class="rounded-2xl shadow-md w-full h-64 object-cover">
+        <div>
+            <h2 class="text-3xl font-bold text-brand-700 mb-4">Tentang Kami</h2>
+            <p class="text-muted leading-relaxed">Wahana Surya (Alkes Balikpapan) adalah penyedia alat kesehatan yang berpusat di Balikpapan, Kalimantan Timur. Kami hadir untuk memotong rantai distribusi yang panjang, memberikan akses cepat dan efisien terhadap alat kesehatan berkualitas bagi masyarakat dan instansi medis di seluruh Kalimantan.</p>
+        </div>
     </section>
 
     {{-- Pasar --}}
@@ -85,6 +93,8 @@
                 <article class="border rounded-xl overflow-hidden hover:shadow-md transition">
                     @if ($product->image)
                         <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="h-40 w-full object-cover">
+                    @else
+                        <img src="{{ config('site.placeholders.product') }}" alt="{{ $product->name }}" class="h-40 w-full object-cover">
                     @endif
                     <div class="p-4">
                         <span class="text-xs text-brand-600 font-medium">{{ \App\Models\Product::CATEGORIES[$product->category] ?? '' }}</span>
@@ -126,6 +136,8 @@
                 <article class="border rounded-xl overflow-hidden">
                     @if ($post->featured_image)
                         <img src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}" class="h-40 w-full object-cover">
+                    @else
+                        <img src="{{ config('site.placeholders.post') }}" alt="{{ $post->title }}" class="h-40 w-full object-cover">
                     @endif
                     <div class="p-5">
                         <h3 class="font-semibold">{{ $post->title }}</h3>
