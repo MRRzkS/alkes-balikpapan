@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    {{-- Set theme before paint to prevent flash (FOUC). Default dark; user choice wins. --}}
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t !== 'light' && t !== 'dark') t = 'dark';
+                document.documentElement.classList.toggle('dark', t === 'dark');
+            } catch (e) {}
+        })();
+    </script>
 
     {{-- Default SEO; pages override via @section('meta') --}}
     @section('meta')
@@ -30,10 +41,10 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-white text-ink">
+<body class="font-sans antialiased bg-white text-ink-900 dark:bg-brand-900 dark:text-ink-100 transition-colors duration-300">
 
     {{-- Public navigation --}}
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }">
+    <header class="sticky top-0 z-50 glass border-b border-gray-200/60 dark:border-white/5 transition-colors duration-300" x-data="{ open: false }">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-2 font-bold text-brand-700 text-lg">
                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-600 text-white">
@@ -50,7 +61,16 @@
                 <a href="{{ route('contact') }}" class="hover:text-brand-700 transition">Kontak</a>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3" x-data="themeToggle">
+                {{-- Dark/light toggle (default dark; choice persisted) --}}
+                <button type="button" data-theme-toggle @click="toggle()" aria-pressed="true" aria-label="Ganti tema gelap/terang"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full glass text-brand-700 dark:text-ink-100 hover:scale-105 transition-transform">
+                    {{-- sun (shown in dark mode) --}}
+                    <svg x-show="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    {{-- moon (shown in light mode) --}}
+                    <svg x-show="theme === 'light'" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+
                 <a href="{{ config('site.wa_link') }}"
                    target="_blank" rel="noopener"
                    class="inline-flex items-center gap-2 bg-wa hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition">
@@ -59,7 +79,7 @@
                 </a>
 
                 {{-- Mobile menu toggle --}}
-                <button type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-brand-700 hover:bg-brand-50 transition" @click="open = ! open" :aria-expanded="open" aria-label="Buka menu">
+                <button type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-brand-700 dark:text-ink-100 hover:bg-brand-50 dark:hover:bg-white/10 transition" @click="open = ! open" :aria-expanded="open" aria-label="Buka menu">
                     <svg x-show="! open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
                     <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
@@ -67,7 +87,7 @@
         </nav>
 
         {{-- Mobile dropdown panel --}}
-        <div x-show="open" x-transition.opacity class="md:hidden border-t border-gray-100 bg-white" @click.outside="open = false">
+        <div x-show="open" x-transition.opacity class="md:hidden border-t border-gray-200/60 dark:border-white/5 glass" @click.outside="open = false">
             <nav class="max-w-7xl mx-auto px-4 py-3 flex flex-col text-sm font-medium text-muted">
                 <a href="{{ route('home') }}" @click="open = false" class="py-2 hover:text-brand-700 transition">Beranda</a>
                 <a href="{{ route('home') }}#tentang" @click="open = false" class="py-2 hover:text-brand-700 transition">Tentang</a>
