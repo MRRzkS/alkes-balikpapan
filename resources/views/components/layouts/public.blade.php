@@ -22,6 +22,9 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
 
+    {{-- Analytics (Google Analytics 4 + Meta Pixel) — only when IDs configured --}}
+    @include('partials.analytics')
+
     <link rel="icon" href="{{ asset('favicon.svg') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet">
