@@ -4,6 +4,7 @@ use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\ProductController;
 use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -13,6 +14,7 @@ Route::get('/produk', [ProductController::class, 'index'])->name('products.index
 Route::get('/produk/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/kontak', [ContactController::class, 'show'])->name('contact');
 Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
