@@ -43,6 +43,7 @@
             </a>
 
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-muted">
+                <a href="{{ route('home') }}" class="hover:text-brand-700 transition">Beranda</a>
                 <a href="{{ route('home') }}#tentang" class="hover:text-brand-700 transition">Tentang</a>
                 <a href="{{ route('products.index') }}" class="hover:text-brand-700 transition">Produk</a>
                 <a href="{{ route('blog.index') }}" class="hover:text-brand-700 transition">Berita</a>
