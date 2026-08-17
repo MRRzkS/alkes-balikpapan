@@ -34,24 +34,24 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center reveal">
             <div class="text-center md:text-left">
                 <span class="inline-block mb-5 px-4 py-1.5 rounded-full text-xs font-semibold glass text-brand-700 dark:text-brand-200">Distributor Alat Kesehatan · Kalimantan Timur</span>
-                <h1 class="text-4xl md:text-6xl font-bold text-white leading-[1.08] tracking-tight">Alkes <span class="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">Balikpapan</span></h1>
-                <p class="mt-5 text-lg md:text-xl text-white/80 max-w-xl mx-auto md:mx-0">Solusi Pengadaan Alat Kesehatan Terpercaya di Kalimantan Timur</p>
+                <h1 class="text-4xl md:text-6xl font-bold text-ink-900 dark:text-white leading-[1.08] tracking-tight">Alkes <span class="bg-gradient-to-r from-brand-600 to-brand-800 dark:from-brand-300 dark:to-brand-500 bg-clip-text text-transparent">Balikpapan</span></h1>
+                <p class="mt-5 text-lg md:text-xl text-ink-600 dark:text-white/80 max-w-xl mx-auto md:mx-0">Solusi Pengadaan Alat Kesehatan Terpercaya di Kalimantan Timur</p>
                 <div class="mt-9 flex flex-wrap justify-center md:justify-start gap-4">
                     <a href="{{ config('site.wa_link') }}" target="_blank" rel="noopener" class="press bg-wa hover:bg-emerald-500 text-white font-semibold px-7 py-3.5 rounded-full shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-transform duration-200">Konsultasi via WhatsApp</a>
-                    <a href="#produk" class="press glass text-white font-semibold px-7 py-3.5 rounded-full hover:-translate-y-0.5 transition-transform duration-200">Lihat Produk</a>
+                    <a href="#produk" class="press glass text-brand-700 dark:text-white font-semibold px-7 py-3.5 rounded-full hover:-translate-y-0.5 transition-transform duration-200">Lihat Produk</a>
                 </div>
                 <div class="mt-10 flex flex-wrap justify-center md:justify-start gap-5">
                     <div class="glass rounded-2xl px-6 py-3.5 text-left">
-                        <div class="text-2xl font-bold text-white">24<span class="text-base font-semibold">j</span></div>
-                        <div class="text-xs text-white/70">Respon WhatsApp</div>
+                        <div class="text-2xl font-bold text-brand-700 dark:text-white">24<span class="text-base font-semibold">j</span></div>
+                        <div class="text-xs text-ink-500 dark:text-white/70">Respon WhatsApp</div>
                     </div>
                     <div class="glass rounded-2xl px-6 py-3.5 text-left">
-                        <div class="text-2xl font-bold text-white">Kaltim</div>
-                        <div class="text-xs text-white/70">Area layanan</div>
+                        <div class="text-2xl font-bold text-brand-700 dark:text-white">Kaltim</div>
+                        <div class="text-xs text-ink-500 dark:text-white/70">Area layanan</div>
                     </div>
                     <div class="glass rounded-2xl px-6 py-3.5 text-left">
-                        <div class="text-2xl font-bold text-white">B2B+B2C</div>
-                        <div class="text-xs text-white/70">Segmen layanan</div>
+                        <div class="text-2xl font-bold text-brand-700 dark:text-white">B2B+B2C</div>
+                        <div class="text-xs text-ink-500 dark:text-white/70">Segmen layanan</div>
                     </div>
                 </div>
             </div>
