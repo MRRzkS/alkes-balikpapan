@@ -97,11 +97,21 @@ html:not(.dark) body {
 .dark .theme-moon { display: block; }
 
 /* Native <select> dropdowns: tell the browser to render its option popup in the
-   matching color scheme, so dark-mode option lists are dark (not white) and text
-   stays readable. Without this the OS paints a white popup but our text is
-   light — white-on-white. */
+   matching color scheme, AND explicitly style the <option> elements so a white
+   native popup never gets light text painted on it. color-scheme alone is not
+   enough on desktop Chromium, so we force the option background+color too. */
 select { color-scheme: light; }
 .dark select { color-scheme: dark; }
+.dark select option {
+    background: #0f172a;
+    color: #f1f5f9;
+}
+.dark select option:checked,
+.dark select option:checked,
+.dark select option:hover {
+    background: #0e7490;
+    color: #ffffff;
+}
 
 /* ---------- Gradients (calm navy/cyan, not neon) ---------- */
 
