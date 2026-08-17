@@ -4,9 +4,9 @@
         <p class="text-ink-600 dark:text-ink-300 mb-8">Jelajahi alat kesehatan kami berdasarkan kategori.</p>
 
         <div class="flex flex-wrap gap-2 mb-10">
-            <a href="{{ route('products.index') }}" class="press px-4 py-2 rounded-full text-sm font-medium glass {{ !$activeCategory ? 'text-white bg-brand-600 border-transparent' : 'text-ink-600 dark:text-ink-300' }}">Semua</a>
+            <a href="{{ route('products.index') }}" class="press px-4 py-2 rounded-full text-sm font-medium {{ !$activeCategory ? 'text-white bg-brand-600 border-transparent' : 'glass text-ink-600 dark:text-ink-300' }}">Semua</a>
             @foreach ($categories as $key => $label)
-                <a href="{{ route('products.index', ['category' => $key]) }}" class="press px-4 py-2 rounded-full text-sm font-medium glass {{ $activeCategory === $key ? 'text-white bg-brand-600 border-transparent' : 'text-ink-600 dark:text-ink-300' }}">{{ $label }}</a>
+                <a href="{{ route('products.index', ['category' => $key]) }}" class="press px-4 py-2 rounded-full text-sm font-medium {{ $activeCategory === $key ? 'text-white bg-brand-600 border-transparent' : 'glass text-ink-600 dark:text-ink-300' }}">{{ $label }}</a>
             @endforeach
         </div>
 
