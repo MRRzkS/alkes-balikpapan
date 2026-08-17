@@ -96,6 +96,13 @@ html:not(.dark) body {
 .dark .theme-sun { display: none; }
 .dark .theme-moon { display: block; }
 
+/* Native <select> dropdowns: tell the browser to render its option popup in the
+   matching color scheme, so dark-mode option lists are dark (not white) and text
+   stays readable. Without this the OS paints a white popup but our text is
+   light — white-on-white. */
+select { color-scheme: light; }
+.dark select { color-scheme: dark; }
+
 /* ---------- Gradients (calm navy/cyan, not neon) ---------- */
 
 .gradient-hero {
