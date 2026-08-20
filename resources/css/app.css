@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+/* Tailwind v4 auto-detects sources but skips anything .gitignore'd — which includes
+   vendor/. Laravel's paginator templates live there and are rendered by ->links() on
+   /produk and the admin lists, so they must be scanned explicitly or pagination
+   renders completely unstyled. (The old tailwind.config.js listed this path, but v4
+   ignores that file entirely.) */
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views";
+
+/* Dark mode is class-based (toggled on <html>), default ON.
+   Style: Modern Dark (Cinema) — dark-primary, glassmorphism, ambient light,
+   layered depth. Source: design-system/alkes-balikpapan/MASTER.md. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Brand: medical blue / cyan scale (calm, not neon) */
+    --color-brand-50: #ecfeff;
+    --color-brand-100: #cffafe;
+    --color-brand-200: #a5f3fc;
+    --color-brand-300: #67e8f9;
+    --color-brand-400: #22d3ee;
+    --color-brand-500: #06b6d4;
+    --color-brand-600: #0891b2; /* primary CTA */
+    --color-brand-700: #0e7490;
+    --color-brand-800: #155e75;
+    --color-brand-900: #164e63;
+
+    /* Ink: near-black text scale — never pure #000 (OLED smear) */
+    --color-ink-50: #f8fafc;
+    --color-ink-100: #f1f5f9;
+    --color-ink-200: #e2e8f0;
+    --color-ink-300: #cbd5e1;
+    --color-ink-400: #94a3b8;
+    --color-ink-500: #64748b;
+    --color-ink-600: #475569;
+    --color-ink-700: #334155;
+    --color-ink-800: #1e293b;
+    --color-ink-900: #0f172a; /* base dark surface */
+    --color-ink-950: #020617;
+
+    /* Muted text (secondary) */
+    --color-muted: #475569;
+
+    /* WhatsApp brand green (CTA) */
+    --color-wa: #25d366;
+
+    /* Typography (Figtree heading + Noto Sans body) */
+    --font-sans: "Figtree", "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+
+    /* Expo-out easing for natural motion (Cinema spec) */
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Layered shadows for 3D depth */
+    --shadow-3d-sm: 0 2px 4px rgba(2, 6, 23, 0.18), 0 8px 16px -8px rgba(8, 145, 178, 0.22);
+    --shadow-3d-lg: 0 24px 48px -20px rgba(8, 145, 178, 0.45), 0 4px 12px rgba(2, 6, 23, 0.25);
+}
+
+body {
+    font-family: "Noto Sans", "Figtree", ui-sans-serif, system-ui, sans-serif;
+    /* Subtle base gradient so the dark canvas is never flat */
+    background:
+        radial-gradient(120% 80% at 80% -10%, rgba(34, 211, 238, 0.10), transparent 60%),
+        radial-gradient(100% 60% at 0% 100%, rgba(8, 145, 178, 0.10), transparent 55%),
+        #0f172a;
+}
+html:not(.dark) body {
+    background:
+        radial-gradient(120% 80% at 80% -10%, rgba(34, 211, 238, 0.18), transparent 60%),
+        radial-gradient(100% 60% at 0% 100%, rgba(8, 145, 178, 0.12), transparent 55%),
+        #ffffff;
+}
+
+/* ---------- Liquid-glass surfaces ---------- */
+
+/* Frosted glass — BlurView intensity ~20 (Cinema spec). */
+.glass {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: var(--shadow-3d-sm);
+}
+.dark .glass {
+    background: rgba(15, 23, 42, 0.55);
+    border-color: rgba(148, 163, 184, 0.16);
+    box-shadow: 0 2px 6px rgba(2, 6, 23, 0.5), 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+}
+
+/* Nav solidifies on scroll so links stay readable over content. */
+[data-site-header] { transition: background 260ms var(--ease-expo), box-shadow 260ms var(--ease-expo); }
+[data-site-header].scrolled {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(22px) saturate(160%);
+    box-shadow: 0 10px 30px -16px rgba(2, 6, 23, 0.4);
+}
+.dark [data-site-header].scrolled {
+    background: rgba(15, 23, 42, 0.86);
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.75);
+}
+
+/* Theme toggle icon: sun in dark mode, moon in light mode (CSS-driven). */
+.theme-moon { display: none; }
+.dark .theme-sun { display: none; }
+.dark .theme-moon { display: block; }
+
+/* Native <select> dropdowns: tell the browser to render its option popup in the
+   matching color scheme, AND explicitly style the <option> elements so a white
+   native popup never gets light text painted on it. color-scheme alone is not
+   enough on desktop Chromium, so we force the option background+color too. */
+select { color-scheme: light; }
+.dark select { color-scheme: dark; }
+.dark select option {
+    background: #0f172a;
+    color: #f1f5f9;
+}
+.dark select option:checked,
+.dark select option:checked,
+.dark select option:hover {
+    background: #0e7490;
+    color: #ffffff;
+}
+
+/* ---------- Gradients (calm navy/cyan, not neon) ---------- */
+
+.gradient-hero {
+    background:
+        radial-gradient(60% 70% at 75% 15%, rgba(34, 211, 238, 0.28), transparent 60%),
+        radial-gradient(50% 60% at 10% 90%, rgba(14, 116, 144, 0.32), transparent 55%),
+        linear-gradient(160deg, #0f172a 0%, #155e75 60%, #0e7490 100%);
+}
+html:not(.dark) .gradient-hero {
+    background:
+        radial-gradient(60% 70% at 75% 15%, rgba(34, 211, 238, 0.22), transparent 60%),
+        radial-gradient(50% 60% at 10% 90%, rgba(8, 145, 178, 0.18), transparent 55%),
+        linear-gradient(160deg, #ecfeff 0%, #cffafe 55%, #ffffff 100%);
+}
+.gradient-cta {
+    background: linear-gradient(135deg, #0891b2 0%, #155e75 50%, #0f172a 100%);
+}
+
+/* ---------- Semi-3D cards ---------- */
+
+/* Lift + glow on hover; no scale to keep layout stable (a11y). */
+.card-3d {
+    transition: transform 320ms var(--ease-expo), box-shadow 320ms var(--ease-expo), border-color 320ms var(--ease-expo);
+    box-shadow: var(--shadow-3d-sm);
+}
+.card-3d:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-3d-lg);
+    border-color: rgba(34, 211, 238, 0.5);
+}
+
+/* Tappable press scale (Cinema spec: 0.97 → 1.0) */
+.press {
+    transition: transform 160ms var(--ease-expo);
+}
+.press:active { transform: scale(0.97); }
+
+/* ---------- Scroll reveal (staggered) ---------- */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms var(--ease-expo), transform 700ms var(--ease-expo);
+    will-change: opacity, transform;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+/* Stagger children with inline --i set in markup. */
+.reveal.is-visible > * { transition-delay: calc(var(--i, 0) * 90ms); }
+
+/* ---------- Keyframe animations (ambient) ---------- */
+
+@keyframes float-slow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -24px) scale(1.06); }
+}
+.animate-float { animation: float-slow 12s ease-in-out infinite; }
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 0.9; }
+}
+.animate-pulse-glow { animation: pulse-glow 6s ease-in-out infinite; }
+
+/* ---------- Respect reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .animate-float, .animate-pulse-glow { animation: none; }
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
