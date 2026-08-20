@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Concerns\HandlesImageUploads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostRequest;
 use App\Models\Post;
 
 class PostController extends Controller
 {
+    use HandlesImageUploads;
+
     public function index()
     {
         $posts = Post::latest()->paginate(10);
@@ -26,7 +29,7 @@ class PostController extends Controller
         $data['author_id'] = $request->user()->id;
 
         if ($image = $request->file('featured_image')) {
-            $data['featured_image'] = $this->storeImage($image);
+            $data['featured_image'] = $this->storeImage($image, 'posts');
         }
 
         Post::create($data);
@@ -45,7 +48,9 @@ class PostController extends Controller
         $data = $request->validated();
 
         if ($image = $request->file('featured_image')) {
-            $data['featured_image'] = $this->storeImage($image);
+            $data['featured_image'] = $this->storeImage($image, 'posts');
+            // Replaced image: drop the old file so uploads do not grow unbounded.
+            $this->deleteImage($post->featured_image);
         }
 
         $post->update($data);
@@ -56,17 +61,10 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->deleteImage($post->featured_image);
         $post->delete();
 
         return redirect()->route('admin.posts.index')
             ->with('success', 'Artikel berhasil dihapus.');
-    }
-
-    // Store uploads directly under public/uploads to avoid storage:link on shared hosting.
-    private function storeImage($image): string
-    {
-        $path = $image->store('posts', 'uploads');
-
-        return 'uploads/' . $path;
     }
 }

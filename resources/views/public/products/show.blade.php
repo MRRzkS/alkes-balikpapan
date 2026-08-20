@@ -14,7 +14,7 @@
         </div>
 
         @if ($product->description)
-            <div class="glass rounded-[1.25rem] p-7 mt-8 prose max-w-none text-ink-700 dark:text-ink-200">{{ nl2br(e($product->description)) }}</div>
+            <div class="glass rounded-[1.25rem] p-7 mt-8 prose max-w-none text-ink-700 dark:text-ink-200">{!! nl2br(e($product->description)) !!}</div>
         @endif
 
         <a href="{{ config('site.wa_link') }}" target="_blank" rel="noopener" class="press inline-flex items-center gap-2 mt-8 bg-wa hover:bg-emerald-500 text-white font-semibold px-6 py-3 rounded-full shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-transform duration-200">

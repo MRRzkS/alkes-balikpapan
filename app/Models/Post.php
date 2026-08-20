@@ -43,6 +43,13 @@ class Post extends Model
                 $post->published_at = now();
             }
         });
+
+        // Keep the cached sitemap honest: publishing or removing a post changes it.
+        $forget = fn () => \Illuminate\Support\Facades\Cache::forget(
+            \App\Http\Controllers\SitemapController::CACHE_KEY
+        );
+        static::saved($forget);
+        static::deleted($forget);
     }
 
     public function scopePublished(Builder $query): Builder

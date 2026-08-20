@@ -37,5 +37,12 @@ class Product extends Model
                 $product->slug = \Illuminate\Support\Str::slug($product->name);
             }
         });
+
+        // Keep the cached sitemap honest: adding or removing a product changes it.
+        $forget = fn () => \Illuminate\Support\Facades\Cache::forget(
+            \App\Http\Controllers\SitemapController::CACHE_KEY
+        );
+        static::saved($forget);
+        static::deleted($forget);
     }
 }

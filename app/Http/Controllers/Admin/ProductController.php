@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Concerns\HandlesImageUploads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
+    use HandlesImageUploads;
+
     public function index()
     {
         $products = Product::latest()->paginate(10);
@@ -26,7 +29,7 @@ class ProductController extends Controller
         $data['is_featured'] = $request->boolean('is_featured');
 
         if ($image = $request->file('image')) {
-            $data['image'] = $this->storeImage($image);
+            $data['image'] = $this->storeImage($image, 'products');
         }
 
         Product::create($data);
@@ -46,7 +49,9 @@ class ProductController extends Controller
         $data['is_featured'] = $request->boolean('is_featured');
 
         if ($image = $request->file('image')) {
-            $data['image'] = $this->storeImage($image);
+            $data['image'] = $this->storeImage($image, 'products');
+            // Replaced image: drop the old file so uploads do not grow unbounded.
+            $this->deleteImage($product->image);
         }
 
         $product->update($data);
@@ -57,14 +62,10 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->deleteImage($product->image);
         $product->delete();
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Produk dihapus.');
-    }
-
-    private function storeImage($image): string
-    {
-        return 'uploads/' . $image->store('products', 'uploads');
     }
 }

@@ -29,14 +29,23 @@
     <meta property="og:site_name" content="Alkes Balikpapan">
     <meta property="og:title" content="{{ $metaTitle ?? 'Alkes Balikpapan — Distributor Alat Kesehatan Terpercaya di Kalimantan Timur' }}">
     <meta property="og:description" content="{{ $metaDescription ?? 'Solusi pengadaan alat kesehatan terpercaya di Kalimantan Timur. Distribusi lokal dari Sepinggan, Balikpapan.' }}">
-    <meta property="og:image" content="{{ asset('og-image.svg') }}">
+    <meta property="og:image" content="{{ asset('og-image.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="id_ID">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ asset('og-image.png') }}">
+
+    {{-- Canonical drops the query string, so ?category= filters do not read as duplicate content --}}
+    <link rel="canonical" href="{{ url()->current() }}">
 
     {{-- Analytics (Google Analytics 4 + Meta Pixel) — only when IDs configured --}}
     @include('partials.analytics')
 
-    <link rel="icon" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('favicon-32.png') }}" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
