@@ -1,0 +1,28 @@
+Proprietary Software License
+Copyright (c) 2026 PT Wahana Surya. All rights reserved.
+
+This software and its accompanying source code, assets, and documentation
+(the "Software") are the confidential and proprietary property of PT Wahana
+Surya ("the Owner") and are licensed, not sold.
+
+1. Grant. The Owner is granted a perpetual, non-transferable right to use,
+   host, and modify the Software for the operation of the Alkes Balikpapan
+   website and related business activities.
+
+2. Restrictions. Except as expressly permitted in writing by the Owner, no
+   person or entity may copy, distribute, sublicense, sell, publish, or create
+   derivative works from the Software, in whole or in part.
+
+3. No Open Source Grant. Public availability of this repository does not place
+   the Software in the public domain and does not grant any open source
+   license. All rights not expressly granted are reserved.
+
+4. Third-Party Components. The Software depends on third-party packages that
+   remain subject to their own licenses, which are unaffected by this document.
+
+5. No Warranty. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN
+   NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+   DAMAGES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE
+   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

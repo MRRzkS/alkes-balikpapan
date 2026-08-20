@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Tailwind v4 auto-detects sources but skips anything .gitignore'd — which includes
+   vendor/. Laravel's paginator templates live there and are rendered by ->links() on
+   /produk and the admin lists, so they must be scanned explicitly or pagination
+   renders completely unstyled. (The old tailwind.config.js listed this path, but v4
+   ignores that file entirely.) */
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views";
+
 /* Dark mode is class-based (toggled on <html>), default ON.
    Style: Modern Dark (Cinema) — dark-primary, glassmorphism, ambient light,
    layered depth. Source: design-system/alkes-balikpapan/MASTER.md. */

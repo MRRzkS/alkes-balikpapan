@@ -8,8 +8,8 @@
         "alternateName": "Wahana Surya",
         "description": "Distributor alat kesehatan terpercaya di Balikpapan, Kalimantan Timur. Melayani rumah sakit, klinik, perusahaan tambang & migas, apotek, serta kebutuhan alkes rumah tangga.",
         "url": "{{ url('/') }}",
-        "logo": "{{ asset('logo.svg') }}",
-        "image": "{{ asset('og-image.svg') }}",
+        "logo": "{{ asset('logo.png') }}",
+        "image": "{{ asset('og-image.png') }}",
         "telephone": "+62 831-5207-5506",
         "email": "halo@alkesbalikpapan.com",
         "address": {

@@ -42,11 +42,8 @@ dashboard for managing content and reading inbound customer inquiries.
 
 ## Screenshots
 
-> Screenshots are not included in this repository yet. Add images under `docs/` and reference them here.
-
-![Home](docs/home.png)
-![Produk](docs/produk.png)
-![Admin Dashboard](docs/admin.png)
+> Not captured yet. Add images under `docs/` and embed them here once they exist —
+> broken image links are worse than no screenshots.
 
 ## Requirements
 
@@ -132,7 +129,13 @@ The project ships with a PHPUnit test suite.
 php artisan test
 ```
 
-All 39 tests cover core application behavior (models, routes, admin protection, inquiry flow, and config-driven rendering).
+All 48 tests cover core application behavior: models, routes, admin protection, the
+inquiry flow (including the honeypot, rate limit, and notification-failure paths),
+image upload lifecycle, and config-driven rendering.
+
+The suite calls `withoutVite()`, so it runs on a clean checkout without building assets
+first. The asset build is verified separately by CI, which fails the pipeline if
+`public/build/manifest.json` is not produced.
 
 ## Admin Access
 
@@ -141,7 +144,9 @@ All 39 tests cover core application behavior (models, routes, admin protection, 
 - A default administrator is created by the database seeder:
   - **Email:** `admin@alkesbalikpapan.com`
   - **Password:** set by the seeder (hashed) — change it after first login.
-- Log in through the Laravel Breeze auth screen, then navigate to `/admin`.
+- Log in at `/login`; you land on `/admin` directly.
+- **Public registration is disabled.** Additional admins are created via
+  `database/seeders/DatabaseSeeder.php` or `php artisan tinker`.
 
 ## Project Structure
 
@@ -167,16 +172,73 @@ alkes-balikpapan/
 ├── routes/
 │   ├── web.php                # Public routes
 │   └── admin.php              # Admin routes
-└── tests/                     # PHPUnit suite
+├── tests/                     # PHPUnit suite
+├── .github/workflows/         # CI + production-branch publishing
+├── .htaccess                  # Root guard, used only if the doc root can't be moved
+└── .env.production.example    # Production env template
 ```
 
 ## Deployment
 
-The application is built for **Hostinger shared hosting**:
+Deployed to **Hostinger shared hosting** via GitHub. Hostinger pulls from git but never
+runs `composer install` or `npm run build`, so CI does both and publishes a ready-to-serve
+tree.
 
-- Set the hosting **document root to `public/`**.
-- Uploads are stored directly in `public/uploads/` (no `storage` symlink required).
-- Run `npm run build` locally (or in CI) and deploy the compiled `public/build/` assets along with the application.
+### How it works
+
+```
+master (clean source)
+  │
+  └─► .github/workflows/deploy.yml
+        ├─ composer install / npm ci / npm run build
+        ├─ php artisan test          ← pipeline gate
+        └─ commit vendor/ + public/build/ to the `production` branch
+              │
+              └─► Hostinger auto-pulls `production`
+```
+
+`production` is committed to, never force-pushed, so Hostinger's `git pull` never hits a
+rewritten history. `.env` and `public/uploads/` are gitignored on `production`, so a
+deploy can never overwrite server credentials or client-uploaded images.
+
+### First-time setup
+
+1. **Database** — hPanel → *Databases → MySQL Databases*. Create the DB and user.
+2. **Git** — hPanel → *Advanced → GIT*. Repository
+   `https://github.com/MRRzkS/alkes-balikpapan`, branch **`production`**, directory
+   `domains/alkesbalikpapan.com/repo`.
+3. **Document root** — hPanel → *Websites → Advanced → Change website's root directory* →
+   point it at `…/repo/public`.
+   If the plan does not allow moving the root, clone into `public_html` instead; the
+   committed root `.htaccess` forces HTTPS, denies `.env` and the application
+   directories, and forwards everything else into `public/`.
+4. **Environment** — copy `.env.production.example` to `.env` on the server and fill in
+   the database, `APP_URL`, SMTP, and `ADMIN_PASSWORD` values.
+5. **Bootstrap over SSH** (once):
+
+   ```bash
+   php artisan key:generate
+   php artisan migrate --force
+   php artisan db:seed --force
+   php artisan config:cache && php artisan route:cache && php artisan view:cache
+   ```
+
+   Without SSH, run the same commands as one-off hPanel cron jobs.
+6. **PHP version** — set 8.2 or newer in hPanel. `composer.json` pins
+   `config.platform.php` to 8.2.0 so the CI-built `vendor/` is safe on any 8.2+ host.
+7. **Auto-deploy** — copy the webhook URL from hPanel's GIT page into GitHub →
+   *Settings → Webhooks* (push event).
+8. **Log in and change the admin password**, then clear `ADMIN_PASSWORD` from `.env`.
+
+### Operational notes
+
+- **After any `.env` edit, re-run `php artisan config:cache`.** A stale config cache is
+  the most common cause of "production is ignoring my change" on shared hosting.
+- Uploads are written straight to `public/uploads/` — no `storage:link` symlink needed.
+- The app timezone is `Asia/Makassar` (WITA). Do not change it once inquiries exist;
+  Laravel stores timestamps in the app timezone.
+- There is no queue worker on shared hosting. `QUEUE_CONNECTION=sync` keeps inquiry
+  notifications inline, and a failing mail host is logged rather than shown to visitors.
 
 ## License
 

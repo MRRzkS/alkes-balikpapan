@@ -7,10 +7,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Posts (blog/berita)
-    Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
+    Route::resource('posts', \App\Http\Controllers\Admin\PostController::class)->except(['show']);
 
     // Products
-    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['show']);
 
     // Inquiries (inbox dari form kontak)
     Route::prefix('inquiries')->name('inquiries.')->group(function () {

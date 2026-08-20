@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Root .htaccess — only used when the repository is cloned directly into the
+# web root (public_html) because the hosting plan will not let the document
+# root be moved.
+#
+# Preferred setup: hPanel -> Websites -> Advanced -> Change website's root
+# directory -> point it at <repo>/public. In that case this file sits above
+# the served directory and is simply never read, which is harmless.
+#
+# When it IS read, it does two jobs: keep application internals unreachable,
+# and hand every real request to public/index.php.
+# ---------------------------------------------------------------------------
+
+Options -Indexes
+
+# Never serve environment files, even if a rewrite rule below is bypassed.
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>
+<FilesMatch "^(composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|\.gitignore|\.gitattributes|\.editorconfig)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Certificate validation must stay reachable over plain HTTP and must not be
+    # caught by the dotfile block below, or SSL renewal fails.
+    RewriteRule ^\.well-known/ - [L]
+
+    # Force HTTPS (Hostinger issues a free certificate; APP_URL assumes https).
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Application internals are not web content. 403 rather than leak a listing.
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor|node_modules|design-system|\.git)(/|$) - [F,L]
+    RewriteRule ^\. - [F,L]
+
+    # Everything else is served out of public/, where Laravel's own .htaccess
+    # takes over and routes to index.php. REQUEST_URI is unchanged, so routing
+    # still sees /produk rather than /public/produk.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

@@ -45,6 +45,15 @@
 
             <form method="POST" action="{{ route('contact.store') }}" class="glass rounded-[1.25rem] p-7 space-y-4 card-3d">
                 @csrf
+
+                {{-- Honeypot. Positioned off-screen with inline styles rather than
+                     display:none (which better bots skip) or utility classes (which a
+                     CSS rebuild could drop). A filled value means a bot; the controller
+                     discards the submission and still shows the success message. --}}
+                <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" value="">
+                </div>
                 <div>
                     <input type="text" name="name" placeholder="Nama*" value="{{ old('name') }}" class="w-full border border-gray-200 dark:border-white/10 bg-white/70 dark:bg-white/5 text-ink-900 dark:text-white rounded-xl px-4 py-3 text-sm focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 outline-none transition">
                     @error('name') <p class="text-red-600 dark:text-red-400 text-xs mt-1">{{ $message }}</p> @enderror

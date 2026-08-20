@@ -13,12 +13,19 @@ Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.sho
 Route::get('/produk', [ProductController::class, 'index'])->name('products.index');
 Route::get('/produk/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/kontak', [ContactController::class, 'show'])->name('contact');
-Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
+
+// Public write endpoint: throttled so bots cannot flood the inbox (each submission
+// also costs an email and a paid WhatsApp gateway message).
+Route::post('/kontak', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');
+
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Every account on this site is an admin; /dashboard only exists so old bookmarks and
+// Breeze's "intended" redirects land somewhere useful. A redirect (not a closure) keeps
+// `php artisan route:cache` working.
+Route::redirect('/dashboard', '/admin')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');

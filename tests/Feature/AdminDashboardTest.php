@@ -62,6 +62,19 @@ class AdminDashboardTest extends TestCase
         $this->assertDatabaseHas('inquiries', ['id' => $inquiry->id, 'is_read' => true]);
     }
 
+    public function test_resource_show_routes_are_gone(): void
+    {
+        // Route::resource used to publish posts.show / products.show with no matching
+        // controller method, so a GET here threw BadMethodCallException — a 500 with a
+        // stack trace. The URI still carries PUT/PATCH/DELETE, so the correct answer
+        // for GET is now 405 Method Not Allowed. What matters is that it is not a 5xx.
+        $post = Post::factory()->create();
+        $product = Product::factory()->create();
+
+        $this->actingAs($this->admin())->get("/admin/posts/{$post->id}")->assertStatus(405);
+        $this->actingAs($this->admin())->get("/admin/products/{$product->id}")->assertStatus(405);
+    }
+
     public function test_admin_can_create_product_in_a_category(): void
     {
         $this->actingAs($this->admin());

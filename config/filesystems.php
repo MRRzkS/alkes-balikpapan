@@ -61,12 +61,14 @@ return [
         ],
 
         // Uploads served directly from public/uploads (no storage:link needed on shared hosting).
+        // throw => true on purpose: a swallowed failure here returns false from store(),
+        // and 'uploads/' . false silently writes a broken image path to the database.
         'uploads' => [
             'driver' => 'local',
             'root' => public_path('uploads'),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/uploads',
             'visibility' => 'public',
-            'throw' => false,
+            'throw' => true,
             'report' => false,
         ],
 

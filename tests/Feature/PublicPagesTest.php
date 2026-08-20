@@ -43,6 +43,23 @@ class PublicPagesTest extends TestCase
         $response->assertSee('Senin–Jumat');
     }
 
+    public function test_product_description_renders_real_line_breaks(): void
+    {
+        // This was {{ nl2br(e(...)) }}, which Blade escaped a second time, so visitors
+        // saw a literal "<br />" in the middle of every multi-line description.
+        $product = Product::factory()->create([
+            'slug' => 'tabung-oksigen',
+            'description' => "Baris pertama.
+Baris kedua.",
+        ]);
+
+        $response = $this->get(route('products.show', $product));
+
+        $response->assertOk();
+        $response->assertSee('<br />', false);
+        $response->assertDontSee('&lt;br /&gt;', false);
+    }
+
     public function test_sitemap_includes_static_and_dynamic_routes(): void
     {
         Post::factory()->create(['status' => 'published', 'slug' => 'berita-a']);
